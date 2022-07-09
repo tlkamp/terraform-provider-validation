@@ -1,0 +1,23 @@
+name: Semantic Release
+on:
+  workflow_run:
+    workflows:
+      - Test
+    branches:
+      - main
+    types:
+      - completed
+
+jobs:
+  semantic_release:
+    name: Semantic Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v2
+      - env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npx -p semantic-release semantic-release

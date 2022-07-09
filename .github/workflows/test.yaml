@@ -1,0 +1,39 @@
+name: Test
+on:
+  push:
+    tags-ignore:
+      - '**'
+    branches:
+      - '**'
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Go
+        uses: actions/setup-go@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Acceptance Test
+        run: make acctest
+  golangci-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v2
+  release-dry-run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node_version: '17'
+      - name: Release Dry Run
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npx -p @semantic-release/changelog -p @semantic-release/git -p semantic-release \
+          semantic-release -d --branches ${GITHUB_REF##*/}
+

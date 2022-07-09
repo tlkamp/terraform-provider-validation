@@ -1,0 +1,9 @@
+.idea/
+# Terraform stuff
+*/.terraform/
+*/.terraform.lock.hcl
+# Go test stuff
+coverage.html
+.coverage.txt
+# The binary name
+terraform-provider-validation

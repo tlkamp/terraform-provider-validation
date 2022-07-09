@@ -1,0 +1,14 @@
+---
+page_title: "Provider: Validation"
+description: |
+    The Validation provider is used to extend validation of multiple variables into a single context.
+---
+
+# Validation Provider
+
+The Validation provider allows users to validate multiple variables in the same context.
+
+This is a logical provider, which means that it works entirely within Terraform's logic, and doesn't interact with any
+other services.
+
+For information on the specific resources available, see the links in the navigation bar.
