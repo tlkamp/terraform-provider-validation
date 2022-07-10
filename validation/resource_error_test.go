@@ -78,7 +78,7 @@ func testAccCheckValidationErrFields(a, sm, d string) resource.TestCheckFunc {
 			return fmt.Errorf("no resource ID set")
 		}
 		summary := rs.Primary.Attributes["summary"]
-		details, ok := rs.Primary.Attributes["details"]
+		details := rs.Primary.Attributes["details"]
 
 		if summary != sm {
 			return fmt.Errorf("summary attribute does not match expected: %s, %s", summary, sm)
