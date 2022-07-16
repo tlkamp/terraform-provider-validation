@@ -22,24 +22,7 @@ func resourceError() *schema.Resource {
 		UpdateContext: resourceErrorUpdate,
 		DeleteContext: resourceErrorDelete,
 
-		Schema: map[string]*schema.Schema{
-			conditionKey: &schema.Schema{
-				Type:        schema.TypeBool,
-				Required:    true,
-				Description: errorConditionDescription,
-				ForceNew:    true,
-			},
-			summaryKey: &schema.Schema{
-				Type:        schema.TypeString,
-				Required:    true,
-				Description: messageDescription,
-			},
-			detailsKey: &schema.Schema{
-				Type:        schema.TypeString,
-				Optional:    true,
-				Description: detailsDescription,
-			},
-		},
+		Schema: errorSchema,
 	}
 }
 
