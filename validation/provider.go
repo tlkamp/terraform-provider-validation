@@ -10,6 +10,20 @@ const (
 	detailsKey   = "details"
 )
 
+var (
+	summarySchema = &schema.Schema{
+		Type:        schema.TypeString,
+		Required:    true,
+		Description: messageDescription,
+	}
+
+	detailsSchema = &schema.Schema{
+		Type:        schema.TypeString,
+		Optional:    true,
+		Description: detailsDescription,
+	}
+)
+
 func Provider() *schema.Provider {
 	return &schema.Provider{
 		ResourcesMap: map[string]*schema.Resource{
