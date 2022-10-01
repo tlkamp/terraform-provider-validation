@@ -27,16 +27,8 @@ func resourceWarning() *schema.Resource {
 				Description: warnConditionDescription,
 				ForceNew:    true,
 			},
-			summaryKey: &schema.Schema{
-				Type:        schema.TypeString,
-				Required:    true,
-				Description: messageDescription,
-			},
-			detailsKey: &schema.Schema{
-				Type:        schema.TypeString,
-				Optional:    true,
-				Description: detailsDescription,
-			},
+			summaryKey: summarySchema,
+			detailsKey: detailsSchema,
 		},
 	}
 }

@@ -18,16 +18,8 @@ func dataSourceWarning() *schema.Resource {
 				Type:        schema.TypeBool,
 				Required:    true,
 			},
-			summaryKey: {
-				Description: messageDescription,
-				Type:        schema.TypeString,
-				Required:    true,
-			},
-			detailsKey: {
-				Description: detailsDescription,
-				Type:        schema.TypeString,
-				Optional:    true,
-			},
+			summaryKey: summarySchema,
+			detailsKey: detailsSchema,
 		},
 	}
 }
