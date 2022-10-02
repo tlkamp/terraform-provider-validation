@@ -26,20 +26,21 @@ func dataSourceWarning() *schema.Resource {
 
 func dataSourceWarningRead(ctx context.Context, data *schema.ResourceData, i interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
-	var details string
+	vd := &validationDocument{severity: diag.Warning}
 
 	// We always create this resource
 	data.SetId(uuid.NewString())
 
-	cond := data.Get(conditionKey).(bool)
-	msg := data.Get(summaryKey).(string)
+	vd.condition = data.Get(conditionKey).(bool)
+	vd.summary = data.Get(summaryKey).(string)
+
 	if ptr, ok := data.GetOk(detailsKey); ok {
-		details = ptr.(string)
+		vd.details = ptr.(string)
 	}
 
-	if cond {
+	if vd.Validate() {
 		// But we only show a warning if the condition is true
-		diags = append(diags, buildDiag(diag.Warning, msg, details))
+		diags = append(diags, vd.Diag())
 	}
 
 	return diags

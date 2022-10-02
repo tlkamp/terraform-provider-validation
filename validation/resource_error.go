@@ -36,15 +36,19 @@ func resourceError() *schema.Resource {
 }
 
 func resourceErrorCreate(ctx context.Context, data *schema.ResourceData, i interface{}) diag.Diagnostics {
-	cond := data.Get(conditionKey).(bool)
-	summary := data.Get(summaryKey).(string)
-	var details string
+	var diags diag.Diagnostics
+	vd := &validationDocument{}
+
+	vd.condition = data.Get(conditionKey).(bool)
+	vd.summary = data.Get(summaryKey).(string)
+
 	if ptr, ok := data.GetOk(detailsKey); ok {
-		details = ptr.(string)
+		vd.details = ptr.(string)
 	}
 
-	if cond {
-		return []diag.Diagnostic{buildDiag(diag.Error, summary, details)}
+	if vd.Validate() {
+		diags = append(diags, vd.Diag())
+		return diags
 	}
 
 	id := uuid.New()

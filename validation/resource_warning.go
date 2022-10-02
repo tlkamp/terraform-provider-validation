@@ -35,15 +35,17 @@ func resourceWarning() *schema.Resource {
 
 func resourceWarningCreate(ctx context.Context, data *schema.ResourceData, i interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
-	cond := data.Get(conditionKey).(bool)
-	summary := data.Get(summaryKey).(string)
-	var details string
+	vd := &validationDocument{severity: diag.Warning}
+
+	vd.condition = data.Get(conditionKey).(bool)
+	vd.summary = data.Get(summaryKey).(string)
+
 	if ptr, ok := data.GetOk(detailsKey); ok {
-		details = ptr.(string)
+		vd.details = ptr.(string)
 	}
 
-	if cond {
-		diags = append(diags, buildDiag(diag.Warning, summary, details))
+	if vd.Validate() {
+		diags = append(diags, vd.Diag())
 	}
 
 	id := uuid.New()

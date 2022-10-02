@@ -26,16 +26,17 @@ func dataSourceError() *schema.Resource {
 
 func dataSourceErrorRead(ctx context.Context, data *schema.ResourceData, i interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
-	var details string
-	cond := data.Get(conditionKey).(bool)
-	msg := data.Get(summaryKey).(string)
+	vd := &validationDocument{}
+
+	vd.condition = data.Get(conditionKey).(bool)
+	vd.summary = data.Get(summaryKey).(string)
 
 	if ptr, ok := data.GetOk(detailsKey); ok {
-		details = ptr.(string)
+		vd.details = ptr.(string)
 	}
 
-	if cond {
-		diags = append(diags, buildDiag(diag.Error, msg, details))
+	if vd.Validate() {
+		diags = append(diags, vd.Diag())
 		return diags
 	}
 
