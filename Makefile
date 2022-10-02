@@ -22,6 +22,7 @@ $(BINARY): gendocs test acctest
 .PHONY:
 testinstall: $(BINARY)
 	@mkdir -p $(LOCALPATH)
+	@rm -f terraform/.terraform.lock.hcl
 	@mv $(BINARY) $(LOCALPATH)
 
 .PHONY:
