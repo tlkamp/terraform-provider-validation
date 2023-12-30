@@ -37,7 +37,6 @@ func dataSourceWarningRead(ctx context.Context, data *schema.ResourceData, i int
 	}
 
 	if vd.Validate() {
-		// But we only show a warning if the condition is true
 		diags = append(diags, vd.Diag())
 	}
 

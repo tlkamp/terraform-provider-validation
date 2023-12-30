@@ -23,7 +23,7 @@ func resourceError() *schema.Resource {
 		DeleteContext: resourceErrorDelete,
 
 		Schema: map[string]*schema.Schema{
-			conditionKey: &schema.Schema{
+			conditionKey: {
 				Type:        schema.TypeBool,
 				Required:    true,
 				Description: errorConditionDescription,
@@ -51,8 +51,7 @@ func resourceErrorCreate(ctx context.Context, data *schema.ResourceData, i inter
 		return diags
 	}
 
-	id := uuid.New()
-	data.SetId(id.String())
+	data.SetId(uuid.NewString())
 
 	return resourceErrorRead(ctx, data, i)
 }

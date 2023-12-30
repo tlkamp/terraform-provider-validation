@@ -36,7 +36,6 @@ func dataSourceErrorRead(ctx context.Context, data *schema.ResourceData, i inter
 
 	if vd.Validate() {
 		diags = append(diags, vd.Diag())
-		return diags
 	}
 
 	data.SetId("none")
