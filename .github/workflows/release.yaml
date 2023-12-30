@@ -12,7 +12,7 @@
 name: release
 on:
   push:
-    tags: [v*]
+    tags: '*'
   workflow_dispatch:
 jobs:
   goreleaser:
@@ -29,11 +29,11 @@ jobs:
           cache: true
       - name: Import GPG key
         id: import_gpg
-        uses: hashicorp/ghaction-import-gpg@v2.1.0
+        uses: crazy-max/ghaction-import-gpg@v6
         env:
           # These secrets will need to be configured for the repository:
-          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
-          PASSPHRASE: ${{ secrets.PASSPHRASE }}
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.PASSPHRASE }}
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v3.0.0
         with:
