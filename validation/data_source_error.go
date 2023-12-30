@@ -3,7 +3,6 @@ package validation
 import (
 	"context"
 
-	"github.com/google/uuid"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
@@ -40,6 +39,6 @@ func dataSourceErrorRead(ctx context.Context, data *schema.ResourceData, i inter
 		return diags
 	}
 
-	data.SetId(uuid.NewString())
+	data.SetId("none")
 	return diags
 }
