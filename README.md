@@ -24,8 +24,8 @@ variable "two" {}
 
 resource "validation_error" "error" {
   condition = var.one == var.two
-  summary = "var.one and var.two must never be equal"
-  details = <<EOF
+  summary   = "var.one and var.two must never be equal"
+  details   = <<EOF
 When var.one and var.two are equal, bad things can happen.
 Please use differing values for these inputs.
 var.one: ${var.one}
@@ -46,10 +46,10 @@ variable "two" {}
 
 resource "validation_warning" "warn" {
   condition = var.one == var.two
-  summary = "var.one and var.two are equal. This will cause an error in future versions"
-  details = <<EOF
-In a future release of this code, var.one and var.two may no longer be equal. Please consider modifying the values to
-be distinct to avoid execution failures.
+  summary   = "var.one and var.two are equal. This will cause an error in future versions"
+  details   = <<EOF
+In a future release of this code, var.one and var.two may no longer be equal. 
+Please consider modifying the values to avoid execution failures.
 var.one: ${var.one}
 var.two: ${var.two}
 EOF
