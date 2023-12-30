@@ -11,4 +11,10 @@ The Validation provider allows users to validate multiple variables in the same 
 This is a logical provider, which means that it works entirely within Terraform's logic, and doesn't interact with any
 other services.
 
+This provider requires no configuration.
+
+```hcl
+provider "validation" {}
+```
+
 For information on the specific resources available, see the links in the navigation bar.
