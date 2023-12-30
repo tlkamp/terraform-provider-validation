@@ -21,7 +21,7 @@ func resourceWarning() *schema.Resource {
 		DeleteContext: resourceWarningDelete,
 
 		Schema: map[string]*schema.Schema{
-			conditionKey: &schema.Schema{
+			conditionKey: {
 				Type:        schema.TypeBool,
 				Required:    true,
 				Description: warnConditionDescription,
@@ -48,8 +48,7 @@ func resourceWarningCreate(ctx context.Context, data *schema.ResourceData, i int
 		diags = append(diags, vd.Diag())
 	}
 
-	id := uuid.New()
-	data.SetId(id.String())
+	data.SetId(uuid.NewString())
 
 	return diags
 }
