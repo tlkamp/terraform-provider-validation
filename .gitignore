@@ -2,6 +2,7 @@
 # Terraform stuff
 */.terraform/
 */.terraform.lock.hcl
+terraform/
 # Go test stuff
 coverage.html
 .coverage.txt
