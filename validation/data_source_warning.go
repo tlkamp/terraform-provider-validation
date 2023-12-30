@@ -3,7 +3,6 @@ package validation
 import (
 	"context"
 
-	"github.com/google/uuid"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
@@ -28,8 +27,7 @@ func dataSourceWarningRead(ctx context.Context, data *schema.ResourceData, i int
 	var diags diag.Diagnostics
 	vd := &validationDocument{severity: diag.Warning}
 
-	// We always create this resource
-	data.SetId(uuid.NewString())
+	data.SetId("none")
 
 	vd.condition = data.Get(conditionKey).(bool)
 	vd.summary = data.Get(summaryKey).(string)
