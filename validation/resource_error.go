@@ -14,6 +14,17 @@ const (
 	detailsDescription        = "More details about the message being displayed to the user, if any."
 )
 
+var errorResourceSchema = map[string]*schema.Schema{
+	conditionKey: {
+		Type:        schema.TypeBool,
+		Required:    true,
+		Description: errorConditionDescription,
+		ForceNew:    true,
+	},
+	summaryKey: summarySchema,
+	detailsKey: detailsSchema,
+}
+
 func resourceError() *schema.Resource {
 	return &schema.Resource{
 		Description:   "Causes an error to be thrown during execution if the condition is true.",
@@ -21,17 +32,7 @@ func resourceError() *schema.Resource {
 		ReadContext:   resourceErrorRead,
 		UpdateContext: resourceErrorUpdate,
 		DeleteContext: resourceErrorDelete,
-
-		Schema: map[string]*schema.Schema{
-			conditionKey: {
-				Type:        schema.TypeBool,
-				Required:    true,
-				Description: errorConditionDescription,
-				ForceNew:    true,
-			},
-			summaryKey: summarySchema,
-			detailsKey: detailsSchema,
-		},
+		Schema:        errorResourceSchema,
 	}
 }
 
