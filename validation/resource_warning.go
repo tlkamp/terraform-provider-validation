@@ -12,6 +12,17 @@ const (
 	warnConditionDescription = "The condition which, if true, causes a warning message to be printed."
 )
 
+var warnResourceSchema = map[string]*schema.Schema{
+	conditionKey: {
+		Type:        schema.TypeBool,
+		Required:    true,
+		Description: warnConditionDescription,
+		ForceNew:    true,
+	},
+	summaryKey: summarySchema,
+	detailsKey: detailsSchema,
+}
+
 func resourceWarning() *schema.Resource {
 	return &schema.Resource{
 		Description:   "Causes a warning to be printed if the condition is true.",
@@ -19,17 +30,7 @@ func resourceWarning() *schema.Resource {
 		ReadContext:   resourceWarningRead,
 		UpdateContext: resourceWarningUpdate,
 		DeleteContext: resourceWarningDelete,
-
-		Schema: map[string]*schema.Schema{
-			conditionKey: {
-				Type:        schema.TypeBool,
-				Required:    true,
-				Description: warnConditionDescription,
-				ForceNew:    true,
-			},
-			summaryKey: summarySchema,
-			detailsKey: detailsSchema,
-		},
+		Schema:        warnResourceSchema,
 	}
 }
 
