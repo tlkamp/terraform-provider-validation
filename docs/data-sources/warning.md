@@ -33,7 +33,7 @@ EOF
 
 ### Required
 
-- `condition` (Boolean) The condition which, if true, causes an error to be thrown.
+- `condition` (Boolean) The condition which, if true, causes a warning message to be printed.
 - `summary` (String) The message displayed to the user if the condition is true.
 
 ### Optional

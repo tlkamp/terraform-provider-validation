@@ -7,19 +7,22 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+// TODO: Refactor into a function that returns the schema
+var warnDataSchema = map[string]*schema.Schema{
+	conditionKey: {
+		Description: warnConditionDescription,
+		Type:        schema.TypeBool,
+		Required:    true,
+	},
+	summaryKey: summarySchema,
+	detailsKey: detailsSchema,
+}
+
 func dataSourceWarning() *schema.Resource {
 	return &schema.Resource{
 		Description: "Causes a warning message to be printed if condition is true.",
 		ReadContext: dataSourceWarningRead,
-		Schema: map[string]*schema.Schema{
-			conditionKey: {
-				Description: errorConditionDescription,
-				Type:        schema.TypeBool,
-				Required:    true,
-			},
-			summaryKey: summarySchema,
-			detailsKey: detailsSchema,
-		},
+		Schema:      warnDataSchema,
 	}
 }
 
