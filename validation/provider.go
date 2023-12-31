@@ -28,6 +28,7 @@ func Provider() *schema.Provider {
 	return &schema.Provider{
 		ResourcesMap: map[string]*schema.Resource{
 			"validation_error":   resourceError(),
+			"validation_errors":  resourceErrors(),
 			"validation_warning": resourceWarning(),
 		},
 		DataSourcesMap: map[string]*schema.Resource{
