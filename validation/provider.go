@@ -33,6 +33,7 @@ func Provider() *schema.Provider {
 		},
 		DataSourcesMap: map[string]*schema.Resource{
 			"validation_error":   dataSourceError(),
+			"validation_errors":  dataSourceErrors(),
 			"validation_warning": dataSourceWarning(),
 		},
 	}

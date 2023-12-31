@@ -116,7 +116,10 @@ func testAccValidationErrorsConfig(t *testing.T, v []testValidation) string {
 	tmpl := template.New("test")
 	out := &bytes.Buffer{}
 	parsed, _ := tmpl.Parse(rsc)
-	parsed.Execute(out, v)
+
+	if err := parsed.Execute(out, v); err != nil {
+		t.Error(err)
+	}
 
 	return out.String()
 }
