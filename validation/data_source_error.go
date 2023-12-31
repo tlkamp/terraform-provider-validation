@@ -7,19 +7,21 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+var errorDataSchema = map[string]*schema.Schema{
+	conditionKey: {
+		Description: errorConditionDescription,
+		Type:        schema.TypeBool,
+		Required:    true,
+	},
+	summaryKey: summarySchema,
+	detailsKey: detailsSchema,
+}
+
 func dataSourceError() *schema.Resource {
 	return &schema.Resource{
 		Description: "Causes an error to be thrown if condition is true.",
 		ReadContext: dataSourceErrorRead,
-		Schema: map[string]*schema.Schema{
-			conditionKey: {
-				Description: errorConditionDescription,
-				Type:        schema.TypeBool,
-				Required:    true,
-			},
-			summaryKey: summarySchema,
-			detailsKey: detailsSchema,
-		},
+		Schema:      errorDataSchema,
 	}
 }
 
