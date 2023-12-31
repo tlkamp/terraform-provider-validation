@@ -1,6 +1,8 @@
 package validation
 
 import (
+	"errors"
+
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 )
 
@@ -24,4 +26,33 @@ func (v *validationDocument) Diag() diag.Diagnostic {
 		Summary:  v.summary,
 		Detail:   v.details,
 	}
+}
+
+// FromMap updates the validationDocument fields from the corresponding fields in the map.
+// TODO: use mitchellh/mapstructure instead of doing this manually -- requires a refactor
+func (v *validationDocument) FromMap(m map[string]any) error {
+	if _, ok := m[conditionKey]; !ok {
+		return errors.New("condition is required")
+	}
+
+	if _, ok := m[conditionKey].(bool); !ok {
+		return errors.New("condition must be type bool")
+	}
+
+	if _, ok := m[summaryKey]; !ok {
+		return errors.New("summary is required")
+	}
+
+	if _, ok := m[summaryKey].(string); !ok {
+		return errors.New("summary must be type string")
+	}
+
+	v.condition = m[conditionKey].(bool)
+	v.summary = m[summaryKey].(string)
+
+	if d, ok := m[detailsKey]; ok {
+		v.details = d.(string)
+	}
+
+	return nil
 }
