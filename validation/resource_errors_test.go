@@ -2,7 +2,6 @@ package validation
 
 import (
 	"bytes"
-	"fmt"
 	"regexp"
 	"testing"
 	"text/template"
@@ -26,8 +25,6 @@ func TestAccValidationErrorsBasic(t *testing.T) {
 		{Condition: false, Summary: "Summary2", Details: "with details"},
 		{},
 	}
-
-	fmt.Println(testAccValidationErrorsConfig(t, vs))
 
 	resource.Test(t, resource.TestCase{
 		Providers:    testAccProviders,
