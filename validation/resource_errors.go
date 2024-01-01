@@ -12,9 +12,9 @@ func resourceErrors() *schema.Resource {
 	return &schema.Resource{
 		Description:   "Causes one or more errors to be thrown during execution if the condition is true",
 		CreateContext: resourceErrorsCreate,
-		ReadContext:   resourceErrorsRead,
-		UpdateContext: resourceErrorsUpdate,
-		DeleteContext: resourceErrorsDelete,
+		ReadContext:   basicCRUDFunc,
+		UpdateContext: basicCRUDFunc,
+		DeleteContext: basicCRUDFunc,
 		Schema: map[string]*schema.Schema{
 			"error": {
 				Type: schema.TypeList,
@@ -52,17 +52,5 @@ func resourceErrorsCreate(ctx context.Context, data *schema.ResourceData, i inte
 
 	data.SetId(uuid.NewString())
 
-	return resourceErrorsRead(ctx, data, i)
-}
-
-func resourceErrorsRead(_ context.Context, _ *schema.ResourceData, _ interface{}) diag.Diagnostics {
-	return nil
-}
-
-func resourceErrorsUpdate(ctx context.Context, data *schema.ResourceData, i interface{}) diag.Diagnostics {
-	return nil
-}
-
-func resourceErrorsDelete(_ context.Context, _ *schema.ResourceData, _ interface{}) diag.Diagnostics {
 	return nil
 }
