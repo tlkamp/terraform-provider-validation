@@ -35,28 +35,69 @@ func TestBasicCRUDFunc(t *testing.T) {
 	assert.Nil(t, basicCRUDFunc(context.TODO(), nil, nil))
 }
 
-func TestParseWarnings(t *testing.T) {
-	var warnings []interface{}
+func TestParseValidations(t *testing.T) {
+	t.Run("Warnings", func(t *testing.T) {
+		var warnings []interface{}
 
-	d := map[string]interface{}{
-		"condition": true,
-		"summary":   "summary",
-		"details":   "deeeeets",
-	}
+		d := map[string]interface{}{
+			"condition": true,
+			"summary":   "summary",
+			"details":   "deeeeets",
+		}
 
-	d2 := map[string]interface{}{
-		"condition": false,
-		"summary":   "s",
-	}
+		d2 := map[string]interface{}{
+			"condition": false,
+			"summary":   "s",
+		}
 
-	warnings = append(warnings, d, d2)
+		warnings = append(warnings, d, d2)
 
-	diags := parseWarnings(warnings)
+		diags := parseValidations(warnings, true)
 
-	assert.NotNil(t, diags)
-	assert.NotEmpty(t, diags)
-	assert.Len(t, diags, 1)
-	assert.Equal(t, diags[0].Severity, diag.Warning)
+		assert.NotNil(t, diags)
+		assert.NotEmpty(t, diags)
+		assert.Len(t, diags, 1)
+
+		// Everything returned should be warning level
+		for _, w := range diags {
+			assert.Equal(t, w.Severity, diag.Warning)
+		}
+	})
+
+	t.Run("Errors", func(t *testing.T) {
+		var errs []interface{}
+
+		d := map[string]interface{}{
+			"condition": true,
+			"summary":   "summary",
+			"details":   "deeeeets",
+		}
+
+		d1 := map[string]interface{}{
+			"condition": true,
+			"summary":   "summary2",
+			"details":   "deets",
+		}
+
+		d2 := map[string]interface{}{
+			"condition": false,
+			"summary":   "s",
+		}
+
+		errs = append(errs, d, d1, d2)
+
+		diags := parseValidations(errs, false)
+
+		assert.NotNil(t, diags)
+		assert.NotEmpty(t, diags)
+		assert.Len(t, diags, 2)
+
+		// Everything returned should be error level
+		for _, w := range diags {
+			assert.Equal(t, w.Severity, diag.Error)
+		}
+	})
+
 }
 
 // This function is used between Resource tests

@@ -27,5 +27,5 @@ func dataSourceWarningsRead(ctx context.Context, data *schema.ResourceData, i in
 	data.SetId("none")
 	warnings := data.Get("warning")
 	warnList := warnings.([]interface{})
-	return parseWarnings(warnList)
+	return parseValidations(warnList, true)
 }

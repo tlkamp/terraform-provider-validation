@@ -48,14 +48,19 @@ func basicCRUDFunc(_ context.Context, _ *schema.ResourceData, _ interface{}) dia
 	return nil
 }
 
-func parseWarnings(warns []interface{}) diag.Diagnostics {
+func parseValidations(items []interface{}, warn bool) diag.Diagnostics {
 	var diags diag.Diagnostics
 
-	for _, warn := range warns {
-		v := &validationDocument{severity: diag.Warning}
-		wMap := warn.(map[string]interface{})
+	for _, item := range items {
+		v := &validationDocument{}
 
-		if err := v.FromMap(wMap); err != nil {
+		if warn {
+			v.severity = diag.Warning
+		}
+
+		iMap := item.(map[string]interface{})
+
+		if err := v.FromMap(iMap); err != nil {
 			diags = append(diags, diag.Diagnostic{
 				Summary: "Error converting input to validationDocument",
 				Detail:  err.Error(),
