@@ -27,9 +27,9 @@ func resourceWarning() *schema.Resource {
 	return &schema.Resource{
 		Description:   "Causes a warning to be printed if the condition is true.",
 		CreateContext: resourceWarningCreate,
-		ReadContext:   resourceWarningRead,
-		UpdateContext: resourceWarningUpdate,
-		DeleteContext: resourceWarningDelete,
+		ReadContext:   basicCRUDFunc,
+		UpdateContext: basicCRUDFunc,
+		DeleteContext: basicCRUDFunc,
 		Schema:        warnResourceSchema,
 	}
 }
@@ -52,16 +52,4 @@ func resourceWarningCreate(ctx context.Context, data *schema.ResourceData, i int
 	data.SetId(uuid.NewString())
 
 	return diags
-}
-
-func resourceWarningRead(ctx context.Context, data *schema.ResourceData, i interface{}) diag.Diagnostics {
-	return nil
-}
-
-func resourceWarningUpdate(ctx context.Context, data *schema.ResourceData, i interface{}) diag.Diagnostics {
-	return resourceWarningRead(ctx, data, i)
-}
-
-func resourceWarningDelete(ctx context.Context, data *schema.ResourceData, i interface{}) diag.Diagnostics {
-	return nil
 }

@@ -29,9 +29,9 @@ func resourceError() *schema.Resource {
 	return &schema.Resource{
 		Description:   "Causes an error to be thrown during execution if the condition is true.",
 		CreateContext: resourceErrorCreate,
-		ReadContext:   resourceErrorRead,
-		UpdateContext: resourceErrorUpdate,
-		DeleteContext: resourceErrorDelete,
+		ReadContext:   basicCRUDFunc,
+		UpdateContext: basicCRUDFunc,
+		DeleteContext: basicCRUDFunc,
 		Schema:        errorResourceSchema,
 	}
 }
@@ -54,20 +54,5 @@ func resourceErrorCreate(ctx context.Context, data *schema.ResourceData, i inter
 
 	data.SetId(uuid.NewString())
 
-	return resourceErrorRead(ctx, data, i)
-}
-
-// not a real resource, so nothing to read.
-func resourceErrorRead(ctx context.Context, data *schema.ResourceData, i interface{}) diag.Diagnostics {
-	return nil
-}
-
-// return nil because a change to condition causes force-recreate, otherwise update the changed fields and that's it.
-func resourceErrorUpdate(ctx context.Context, data *schema.ResourceData, i interface{}) diag.Diagnostics {
-	return nil
-}
-
-// not a real resource, so delete it from state.
-func resourceErrorDelete(ctx context.Context, data *schema.ResourceData, i interface{}) diag.Diagnostics {
 	return nil
 }
