@@ -34,5 +34,5 @@ func resourceWarningsCreate(ctx context.Context, data *schema.ResourceData, i in
 
 	data.SetId(uuid.NewString())
 
-	return parseWarnings(warnList)
+	return parseValidations(warnList, true)
 }

@@ -24,30 +24,10 @@ func dataSourceErrors() *schema.Resource {
 }
 
 func dataSourceErrorsRead(ctx context.Context, data *schema.ResourceData, i interface{}) diag.Diagnostics {
-	var diags diag.Diagnostics
-
-	// TODO: encapsulate this into a function that returns diags.
 	errs := data.Get("error")
 	errsList := errs.([]interface{})
 
-	for _, e := range errsList {
-		v := &validationDocument{}
-		eMap := e.(map[string]interface{})
-
-		if err := v.FromMap(eMap); err != nil {
-			diags = append(diags, diag.Diagnostic{
-				Summary: "Error converting input to validationDocument",
-				Detail:  err.Error(),
-			})
-		}
-
-		if v.Validate() {
-			diags = append(diags, v.Diag())
-		}
-	}
-	// TODO: end todo
-
 	data.SetId("none")
 
-	return diags
+	return parseValidations(errsList, false)
 }
