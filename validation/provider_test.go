@@ -1,9 +1,11 @@
 package validation
 
 import (
+	"context"
 	"fmt"
 	"testing"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
@@ -27,6 +29,34 @@ func TestProvider(t *testing.T) {
 
 func TestProviderImpl(t *testing.T) {
 	var _ *schema.Provider = Provider()
+}
+
+func TestBasicCRUDFunc(t *testing.T) {
+	assert.Nil(t, basicCRUDFunc(context.TODO(), nil, nil))
+}
+
+func TestParseWarnings(t *testing.T) {
+	var warnings []interface{}
+
+	d := map[string]interface{}{
+		"condition": true,
+		"summary":   "summary",
+		"details":   "deeeeets",
+	}
+
+	d2 := map[string]interface{}{
+		"condition": false,
+		"summary":   "s",
+	}
+
+	warnings = append(warnings, d, d2)
+
+	diags := parseWarnings(warnings)
+
+	assert.NotNil(t, diags)
+	assert.NotEmpty(t, diags)
+	assert.Len(t, diags, 1)
+	assert.Equal(t, diags[0].Severity, diag.Warning)
 }
 
 // This function is used between Resource tests
