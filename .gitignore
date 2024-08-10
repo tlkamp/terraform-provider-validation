@@ -8,3 +8,5 @@ coverage.html
 .coverage.txt
 # The binary name
 terraform-provider-validation
+
+dist/
