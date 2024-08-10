@@ -36,4 +36,16 @@ jobs:
         run: |
           npx -p @semantic-release/changelog -p @semantic-release/git -p semantic-release \
           semantic-release -d --branches ${GITHUB_REF##*/}
+  goreleaser-check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install GoReleaser
+      uses: goreleaser/goreleaser-action@v6
+      with:
+        install-only: true
+    - name: Show GoReleaser version
+      run: goreleaser -v
+    - name: check
+      run: goreleaser check .goreleaser.yml
 
